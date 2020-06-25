@@ -6,6 +6,8 @@
 package Proceso;
 
 import java.awt.Rectangle;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -13,13 +15,14 @@ import java.awt.Rectangle;
  */
 public class Inicio extends javax.swing.JFrame {
             
-    Conexion con;
+    
     /**
      * Creates new form Inicio
      */
     public Inicio() {
         initComponents();
        Conexion con = new Conexion();
+       con.Conectar();
         setBounds(new Rectangle(900, 600));
         setLocationRelativeTo(null);
         setTitle("Sistema de Cuenta de Ahorros");
@@ -63,7 +66,7 @@ public class Inicio extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(0, 51, 204));
 
-        panel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/descarga.jpg"))); // NOI18N
+        panel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/4-min.jpg"))); // NOI18N
 
         jScrollPane1.setViewportView(jTextPane1);
 
@@ -107,10 +110,20 @@ public class Inicio extends javax.swing.JFrame {
         jMenu1.add(jMenuItem2);
 
         jMenuItem1.setText("Ingresar");
+        jMenuItem1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem1ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem1);
         jMenu1.add(jSeparator1);
 
         jMenuItem3.setText("Salir");
+        jMenuItem3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem3ActionPerformed(evt);
+            }
+        });
         jMenu1.add(jMenuItem3);
 
         jMenuBar1.add(jMenu1);
@@ -119,9 +132,19 @@ public class Inicio extends javax.swing.JFrame {
         jMenu2.setText("Operaciones");
 
         jMenuItem4.setText("Depositar");
+        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem4ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem4);
 
         jMenuItem5.setText("Retirar");
+        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem5ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem5);
 
         jMenuItem6.setText("Transferir");
@@ -146,9 +169,19 @@ public class Inicio extends javax.swing.JFrame {
         jMenu3.setText("Ayuda");
 
         jMenuItem9.setText("Deposito");
+        jMenuItem9.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem9ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem9);
 
         jMenuItem10.setText("Retiro");
+        jMenuItem10.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem10ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenuItem10);
 
         jMenuItem11.setText("Transferencia");
@@ -160,7 +193,7 @@ public class Inicio extends javax.swing.JFrame {
         jMenu3.add(jMenuItem11);
         jMenu3.add(jSeparator4);
 
-        jMenuItem12.setText("Acerca De");
+        jMenuItem12.setText("Integrantes");
         jMenuItem12.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem12ActionPerformed(evt);
@@ -189,20 +222,94 @@ public class Inicio extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
-        // TODO add your handling code here:
+             // TODO add your handling code here:
+             NuevoUsuario nu=new NuevoUsuario();
+             panel1.add(nu);
+             nu.show();
+             
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
     private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
         // TODO add your handling code here:
+         Transferencia tra=new Transferencia();
+             panel1.add(tra);
+             tra.show();
     }//GEN-LAST:event_jMenuItem6ActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         // TODO add your handling code here:
+           JOptionPane.showMessageDialog(this,
+                "El proceso de la transferencia une las dos funciones anteriores en una sola:\n"+
+                "Primeramente tendras que indicar tu clave.\n"+
+                "Luego indicaras el monto a transferir seguido de la cuenta a\n"+
+                "la que quieras transferir tu dinero.Lo que hace es retirar de tu dinero\n"+
+                "la cantidad que indiques, siempre que no exceda los 20000, y depositar\n"+
+                "a la cuenta que indiques, esa cantidad de dinero.",
+                "Transferencia",JOptionPane.INFORMATION_MESSAGE,new ImageIcon("src/Imagenes/Info_icon_002.svg.png"));
+    
+        
     }//GEN-LAST:event_jMenuItem11ActionPerformed
 
     private void jMenuItem12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem12ActionPerformed
         // TODO add your handling code here:
+           JOptionPane.showMessageDialog(this,
+                "Grupo: 10\n"+
+                "Integrantes:\nFabian Armijos\n"+
+                "Juan Matinez\n"+
+                "Kleber Muy",
+                "Integrantes de Proyecto",
+               JOptionPane.INFORMATION_MESSAGE,new ImageIcon("src/Imagenes/Info_icon_002.svg.png"));
+    
     }//GEN-LAST:event_jMenuItem12ActionPerformed
+
+    private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
+        // TODO add your handling code here:
+        Ingresar in=new Ingresar();
+             panel1.add(in);
+             in.show();
+    }//GEN-LAST:event_jMenuItem1ActionPerformed
+
+    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+        // TODO add your handling code here:
+         Deposito de=new Deposito();
+             panel1.add(de);
+             de.show();
+    }//GEN-LAST:event_jMenuItem4ActionPerformed
+
+    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+        // TODO add your handling code here:
+         Retiro re=new Retiro();
+             panel1.add(re);
+             re.show();
+    }//GEN-LAST:event_jMenuItem5ActionPerformed
+
+    private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
+        // TODO add your handling code here:
+        setVisible(false);
+        dispose();
+    }//GEN-LAST:event_jMenuItem3ActionPerformed
+
+    private void jMenuItem9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem9ActionPerformed
+        // TODO add your handling code here:
+        JOptionPane.showMessageDialog(this,
+                "La tarea de deposito se realiza de la siguente manera:\n"+
+                "Seleccionas un monto predeterminado para depositar o puedes\n"+
+                "tambien ingresar un monto que prefieras, siempre que este\n"+
+                "no supere los 20000 dolares americanos",
+                "Deposito",JOptionPane.INFORMATION_MESSAGE,new ImageIcon("src/Imagenes/Info_icon_002.svg.png"));
+    }//GEN-LAST:event_jMenuItem9ActionPerformed
+
+    private void jMenuItem10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem10ActionPerformed
+        // TODO add your handling code here:
+         JOptionPane.showMessageDialog(this,
+                "La tarea de retiro se realiza de la siguente manera:\n"+
+                "Necesitas ingresar nuevamente tu clave para poder verificar\n"+
+                "si es que realmente eres tu quien esta manipulando los datos\n"+
+                "luego selecciona un monto predeterminado o ingresar otro valor\n"+
+                "siempre que este no exceda los 20000 dolares americanos.",
+                "Retiro",JOptionPane.INFORMATION_MESSAGE,new ImageIcon("src/Imagenes/Info_icon_002.svg.png"));
+    
+    }//GEN-LAST:event_jMenuItem10ActionPerformed
 
     /**
      * @param args the command line arguments

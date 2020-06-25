@@ -4,38 +4,35 @@
  * and open the template in the editor.
  */
 package Proceso;
+import java.awt.*;
 import java.sql.*;
-import javax.swing.JOptionPane;
-import java.sql.Connection;
-import java.sql.DriverManager;
 
 /**
  *
  * @author Usuario
  */
 public class Conexion {
-    //private static String DRIVER="com.mysql.jdbc.Driver";
-    private static String URL="jdbc:mysql://localhost:3306/cuenta";
-    private static String USER="root";
-    private static String PASSWORD="12345";
+   
+    static Connection conexion=null;
+    static String driver="com.mysql.jdbc.Driver";
+    static String url="jdbc:mysql://localhost/cuenta";
+    
+   
+    public static Statement sentencia;
+    public Connection Conectar(){
+        
+    try 
+    {
+       if(conexion==null){
+           Class.forName(driver);
+           conexion=DriverManager.getConnection(url,"root","12345");
+           System.out.println("CONEXION CORRECTA");
+       }
+    } catch(HeadlessException | ClassNotFoundException | SQLException e){
+        System.out.println(e);
+    }
+    return conexion;
+    }}
     
     
-    static{
-         try { 
-             Class.forName("com.mysql.jdbc.Driver");
-    } catch(ClassNotFoundException e){
-        JOptionPane.showMessageDialog(null,"ERROR EN EL DRIVER:"+ e);
-    }
-    }
-    
-    public Connection getConnection(){
-        Connection con=null;
-    try{
-        con=DriverManager.getConnection(URL,USER,PASSWORD);
-        JOptionPane.showConfirmDialog(null,"CONEXION EXITOSA");
-        } catch(SQLException e){
-        JOptionPane.showMessageDialog(null,"ERROR DE CONEXION"+ e );
-    }
-    return con;
-    }
-}
+

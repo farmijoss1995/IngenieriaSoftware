@@ -5,6 +5,11 @@
  */
 package Proceso;
 
+import java.awt.Rectangle;
+import java.sql.ResultSet;
+import javax.naming.spi.DirStateFactory;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Usuario
@@ -16,6 +21,7 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
      */
     public NuevoUsuario() {
         initComponents();
+        setBounds(new Rectangle(200,50,500,400));
     }
 
     /**
@@ -33,11 +39,11 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
         labelMetric3 = new org.edisoncor.gui.label.LabelMetric();
         labelMetric4 = new org.edisoncor.gui.label.LabelMetric();
         labelMetric5 = new org.edisoncor.gui.label.LabelMetric();
-        textField1 = new java.awt.TextField();
-        textField2 = new java.awt.TextField();
-        textField3 = new java.awt.TextField();
-        passwordField1 = new org.edisoncor.gui.passwordField.PasswordField();
-        textField4 = new java.awt.TextField();
+        txtNombre = new java.awt.TextField();
+        txtDNI = new java.awt.TextField();
+        txtCuenta = new java.awt.TextField();
+        txtClave = new org.edisoncor.gui.passwordField.PasswordField();
+        txtSaldo = new java.awt.TextField();
         jButton1 = new javax.swing.JButton();
         labelMetric6 = new org.edisoncor.gui.label.LabelMetric();
 
@@ -58,7 +64,21 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
 
         labelMetric5.setText("Saldo Inicial");
 
+        txtNombre.setName("txtNombre"); // NOI18N
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+
+        txtCuenta.setName("txtCuenta"); // NOI18N
+
         jButton1.setText("Ingresar Usuario");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         labelMetric6.setText("(5 Caracteres)");
 
@@ -78,14 +98,14 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(passwordField1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(textField4, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
+                            .addComponent(txtClave, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtSaldo, javax.swing.GroupLayout.DEFAULT_SIZE, 113, Short.MAX_VALUE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(labelMetric6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(textField3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
-                        .addComponent(textField2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(textField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(txtCuenta, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                        .addComponent(txtDNI, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addGap(75, 75, 75)
                         .addComponent(jButton1)))
@@ -97,24 +117,24 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
                 .addGap(23, 23, 23)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelMetric1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelMetric2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDNI, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelMetric3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelMetric4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtClave, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelMetric6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(labelMetric5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtSaldo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
@@ -133,6 +153,36 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+public boolean tieneNumeros(String txt){
+        char[] car = txt.toCharArray();
+        for(int i=0; i<txt.length();i++){
+            if(Character.isDigit(car[i])){
+            return true;
+            }
+            }return false;
+}
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        // TODO add your handling code here:
+        Conexion con=new Conexion();
+        
+        try{
+            if(tieneNumeros(txtNombre.getText())){
+                throw new Exception("El campo nombre no puede contener numeros");
+            }
+           String insert = "insert into usuario values ("+txtCuenta.getText()+",'"+txtClave.getText()+"','"+txtNombre.getText()+"',"+txtDNI.getText()+","+txtSaldo.getText()+")";
+           
+           Conexion.sentencia=Conexion.conexion.createStatement();
+           Conexion.sentencia.executeUpdate(insert);
+            JOptionPane.showMessageDialog(this,"Exito al crear usuario");
+        }catch(Exception ex){
+            JOptionPane.showMessageDialog(this, ex.getMessage());
+        }
+        
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -144,10 +194,10 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
     private org.edisoncor.gui.label.LabelMetric labelMetric5;
     private org.edisoncor.gui.label.LabelMetric labelMetric6;
     private org.edisoncor.gui.panel.Panel panel1;
-    private org.edisoncor.gui.passwordField.PasswordField passwordField1;
-    private java.awt.TextField textField1;
-    private java.awt.TextField textField2;
-    private java.awt.TextField textField3;
-    private java.awt.TextField textField4;
+    private org.edisoncor.gui.passwordField.PasswordField txtClave;
+    private java.awt.TextField txtCuenta;
+    private java.awt.TextField txtDNI;
+    private java.awt.TextField txtNombre;
+    private java.awt.TextField txtSaldo;
     // End of variables declaration//GEN-END:variables
 }
