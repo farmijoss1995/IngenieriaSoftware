@@ -4,18 +4,26 @@
  * and open the template in the editor.
  */
 package Proceso;
-
+import java.awt.Rectangle;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 /**
  *
  * @author Usuario
  */
 public class Ingresar extends javax.swing.JInternalFrame {
+    public static String cuenta;
+    public static String clave;
+    
 
     /**
      * Creates new form Ingresar
      */
     public Ingresar() {
         initComponents();
+        setTitle("Ingreso");
+        setBounds(new Rectangle(85, 64, 367, 208));
     }
 
     /**
@@ -30,8 +38,8 @@ public class Ingresar extends javax.swing.JInternalFrame {
         panel1 = new org.edisoncor.gui.panel.Panel();
         labelMetric1 = new org.edisoncor.gui.label.LabelMetric();
         labelMetric2 = new org.edisoncor.gui.label.LabelMetric();
-        textField1 = new java.awt.TextField();
-        passwordField1 = new org.edisoncor.gui.passwordField.PasswordField();
+        txtCuentaingre = new java.awt.TextField();
+        txtClaveingre = new org.edisoncor.gui.passwordField.PasswordField();
         jButton1 = new javax.swing.JButton();
 
         setClosable(true);
@@ -45,19 +53,25 @@ public class Ingresar extends javax.swing.JInternalFrame {
 
         labelMetric2.setText("Clave");
 
-        textField1.addActionListener(new java.awt.event.ActionListener() {
+        txtCuentaingre.setName("txtCuentaingre"); // NOI18N
+        txtCuentaingre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textField1ActionPerformed(evt);
+                txtCuentaingreActionPerformed(evt);
             }
         });
 
-        passwordField1.addActionListener(new java.awt.event.ActionListener() {
+        txtClaveingre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                passwordField1ActionPerformed(evt);
+                txtClaveingreActionPerformed(evt);
             }
         });
 
         jButton1.setText("Ingresar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -71,9 +85,8 @@ public class Ingresar extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jButton1, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)
-                    .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(passwordField1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(textField1, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE)))
+                    .addComponent(txtClaveingre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(txtCuentaingre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 97, Short.MAX_VALUE))
                 .addGap(48, 48, 48))
         );
         panel1Layout.setVerticalGroup(
@@ -81,12 +94,12 @@ public class Ingresar extends javax.swing.JInternalFrame {
             .addGroup(panel1Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(textField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCuentaingre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelMetric1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(23, 23, 23)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelMetric2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtClaveingre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addContainerGap())
@@ -106,21 +119,49 @@ public class Ingresar extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void textField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textField1ActionPerformed
+    private void txtCuentaingreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCuentaingreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textField1ActionPerformed
+    }//GEN-LAST:event_txtCuentaingreActionPerformed
 
-    private void passwordField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_passwordField1ActionPerformed
+    private void txtClaveingreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtClaveingreActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_passwordField1ActionPerformed
+    }//GEN-LAST:event_txtClaveingreActionPerformed
 
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
 
+        // TODO add your handling code here:
+        
+        try{
+            if (txtCuentaingre.getText().isEmpty()){throw new Exception("El campo de la cuenta\nesta vacio");}
+            if (txtClaveingre.getText().isEmpty()){throw new Exception("El campo de la clave\nesta vacio");}
+            if(Util.tieneLetras(txtCuentaingre.getText())){throw new Exception("El campo de la cuenta\nsolo acepta numeros");}
+             if(txtClaveingre.getText().length()!=4){throw new Exception("La clave solo puede contener\n4 caracteres");}
+             
+             cuenta=txtCuentaingre.getText();
+             clave=txtClaveingre.getText();
+             String consulta = "Select Clave from  usuario where `Numero de cuenta`="+cuenta;
+             Conexion.sentencia =Conexion.conexion.createStatement();
+             ResultSet rs = Conexion.sentencia.executeQuery(consulta);
+             while(rs.next()){
+                 if(clave.equals(rs.getString("Clave"))==false){
+                     throw new Exception("CLAVE INCORRECTA!!!");
+                 }
+             }
+             
+             
+             Util.mensaje(this, "Bienvenido..", "Exito", "src/Imagenes/descarga.jpg");
+                } catch (Exception ex) {
+            Util.mensaje(this, ex.getMessage(), "Error", "src/Imagenes/descarga.jpg");
+        }      
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private org.edisoncor.gui.label.LabelMetric labelMetric1;
     private org.edisoncor.gui.label.LabelMetric labelMetric2;
     private org.edisoncor.gui.panel.Panel panel1;
-    private org.edisoncor.gui.passwordField.PasswordField passwordField1;
-    private java.awt.TextField textField1;
+    private org.edisoncor.gui.passwordField.PasswordField txtClaveingre;
+    private java.awt.TextField txtCuentaingre;
     // End of variables declaration//GEN-END:variables
 }

@@ -5,6 +5,7 @@
  */
 package Proceso;
 
+import static Proceso.Util.tieneNumeros;
 import java.awt.Rectangle;
 import java.sql.ResultSet;
 import javax.naming.spi.DirStateFactory;
@@ -14,12 +15,13 @@ import javax.swing.JOptionPane;
  *
  * @author Usuario
  */
-public class NuevoUsuario extends javax.swing.JInternalFrame {
-
+public class Nuevo extends javax.swing.JInternalFrame {
+    public static String cuenta;
+    public static String clave;
     /**
      * Creates new form NuevoUsuario
      */
-    public NuevoUsuario() {
+    public Nuevo() {
         initComponents();
         setBounds(new Rectangle(200,50,500,400));
     }
@@ -56,7 +58,7 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
 
         labelMetric1.setText("Nombres Completos");
 
-        labelMetric2.setText("DNI");
+        labelMetric2.setText("Cedula");
 
         labelMetric3.setText("Numero de Cuenta");
 
@@ -153,29 +155,35 @@ public class NuevoUsuario extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-public boolean tieneNumeros(String txt){
-        char[] car = txt.toCharArray();
-        for(int i=0; i<txt.length();i++){
-            if(Character.isDigit(car[i])){
-            return true;
-            }
-            }return false;
-}
+
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
         Conexion con=new Conexion();
         
         try{
-            if(tieneNumeros(txtNombre.getText())){
-                throw new Exception("El campo nombre no puede contener numeros");
-            }
-           String insert = "insert into usuario values ("+txtCuenta.getText()+",'"+txtClave.getText()+"','"+txtNombre.getText()+"',"+txtDNI.getText()+","+txtSaldo.getText()+")";
+            if(txtNombre.getText().isEmpty()){throw new Exception("El campo nombre no puede contener numeros");}
+             if(txtDNI.getText().isEmpty()){throw new Exception("El campo cedula\nesta en blanco");}
+              if(txtCuenta.getText().isEmpty()){throw new Exception("El campo numero de cuenta\nesta vacio");}
+               if(txtClave.getText().isEmpty()){throw new Exception("El campo Clave\nesta vacio");}
+                if(txtSaldo.getText().isEmpty()){throw new Exception("El campo Saldo\nesta vacio");}
+                 
+              
+            if(Util.tieneNumeros(txtNombre.getText())){throw new Exception("El campo nombre\nsolo acepta letras");}
+            if(Util.tieneLetras(txtDNI.getText())){throw new Exception("El campo cedula\nsolo acepta numeros");}
+            if(Util.tieneLetras(txtCuenta.getText())){throw new Exception("El campo Numero de Cuenta\nsolo acepta numeros");}
+            if(txtClave.getText().length()!=4){throw new Exception("El campo clave\nsolo puede tener 4 caracteres");}
+            if(Util.tieneLetras(txtCuenta.getText())){throw new Exception("El campo Numero de Cuenta\nsolo acepta numeros");}
+           String insert = 
+                   "insert into usuario values ("+txtCuenta.getText()
+                   +",'"+txtClave.getText()+"','"+txtNombre.getText()+"',"+txtDNI.getText()+","+txtSaldo.getText()+")";
            
            Conexion.sentencia=Conexion.conexion.createStatement();
            Conexion.sentencia.executeUpdate(insert);
-            JOptionPane.showMessageDialog(this,"Exito al crear usuario");
+           
+            Util.mensaje(this, "Exito al\ncrear usuario", "Exito", "src/Imagenes/descarga.jpg");
+            this.dispose();
         }catch(Exception ex){
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+           Util.mensaje(this, ex.getMessage(), "Error", "src/Imagenes/descarga.jpg");
         }
         
     }//GEN-LAST:event_jButton1ActionPerformed

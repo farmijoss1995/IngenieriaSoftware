@@ -5,17 +5,29 @@
  */
 package Proceso;
 
+import java.awt.Rectangle;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author Usuario
  */
 public class Deposito extends javax.swing.JInternalFrame {
 
+    static double getSaldoAcutal(String cuenta) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    double monto;
+    double nuevomonto;
     /**
      * Creates new form Retiros
      */
     public Deposito() {
         initComponents();
+        setTitle("Deposito");
+        setBounds(new Rectangle(85, 64, 367, 208));
     }
 
     /**
@@ -30,9 +42,9 @@ public class Deposito extends javax.swing.JInternalFrame {
         panel1 = new org.edisoncor.gui.panel.Panel();
         labelMetric1 = new org.edisoncor.gui.label.LabelMetric();
         labelMetric2 = new org.edisoncor.gui.label.LabelMetric();
-        textFieldRectIcon1 = new org.edisoncor.gui.textField.TextFieldRectIcon();
+        txtOtro = new org.edisoncor.gui.textField.TextFieldRectIcon();
         buttonAction1 = new org.edisoncor.gui.button.ButtonAction();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        Monto = new javax.swing.JComboBox<>();
 
         setClosable(true);
         setIconifiable(true);
@@ -45,18 +57,23 @@ public class Deposito extends javax.swing.JInternalFrame {
 
         labelMetric2.setText("Otro monto");
 
-        textFieldRectIcon1.addActionListener(new java.awt.event.ActionListener() {
+        txtOtro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                textFieldRectIcon1ActionPerformed(evt);
+                txtOtroActionPerformed(evt);
             }
         });
 
         buttonAction1.setText("EJECUTAR");
-
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100", "200", "300", "400", "500", "1000", "2000", "3000", "10000", "20000" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        buttonAction1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                buttonAction1ActionPerformed(evt);
+            }
+        });
+
+        Monto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100", "200", "300", "400", "500", "1000", "2000", "3000", "10000", "20000", "Otro" }));
+        Monto.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MontoActionPerformed(evt);
             }
         });
 
@@ -73,8 +90,8 @@ public class Deposito extends javax.swing.JInternalFrame {
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(buttonAction1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                        .addComponent(jComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(textFieldRectIcon1, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)))
+                        .addComponent(Monto, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtOtro, javax.swing.GroupLayout.DEFAULT_SIZE, 110, Short.MAX_VALUE)))
                 .addGap(38, 38, 38))
         );
         panel1Layout.setVerticalGroup(
@@ -83,11 +100,11 @@ public class Deposito extends javax.swing.JInternalFrame {
                 .addGap(35, 35, 35)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelMetric1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(Monto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(21, 21, 21)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelMetric2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(textFieldRectIcon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtOtro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(26, 26, 26)
                 .addComponent(buttonAction1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(112, Short.MAX_VALUE))
@@ -106,22 +123,58 @@ public class Deposito extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void textFieldRectIcon1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldRectIcon1ActionPerformed
+public static double getSaldoActual(String cuenta)throws SQLException{
+    double saldo = 0;
+    String consulta= "Select Saldo from usuario where `Numero de cuenta`="+cuenta;
+    Statement sent= Conexion.conexion.createStatement();
+    ResultSet rs= sent.executeQuery(consulta);
+    if(rs.next()){
+        saldo=rs.getFloat(1);
+    }
+    return saldo;
+}
+    private void txtOtroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtOtroActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_textFieldRectIcon1ActionPerformed
+    }//GEN-LAST:event_txtOtroActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void MontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MontoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_MontoActionPerformed
+
+    private void buttonAction1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAction1ActionPerformed
+        // TODO add your handling code here:
+        try{
+            if(Monto.getSelectedItem().toString().equals("Otro")&& txtOtro.getText().isEmpty())
+            {throw new Exception("El campo para el\nsaldo esta vacio");}
+             
+            if(txtOtro.getText().isEmpty()==false && Util.tieneLetras(txtOtro.getText()))
+            {throw new Exception("El campo para el saldo\nsolo acepta cantidades");}
+            
+             if(Monto.getSelectedItem().toString().equals("Otro")){
+                 monto = Double.parseDouble(txtOtro.getText());
+             }else{
+                 monto= Double.parseDouble(Monto.getSelectedItem().toString());
+             }
+             nuevomonto=getSaldoActual(Ingresar.cuenta);
+             nuevomonto+=monto;
+             
+           String update = "update usuario set Saldo = "+nuevomonto+" where `Numero de cuenta`="+Ingresar.cuenta;
+           Conexion.sentencia = Conexion.conexion.createStatement();
+           Conexion.sentencia.executeUpdate(update);
+           Util.mensaje(this, "Exito al depositar", "Exito", "src/Imagenes/descarga.jpg");
+                    }catch(Exception ex){
+                        Util.mensaje(this, ex.getMessage(), "Error", "src/Imagenes/descarga.jpg");
+                    }
+           
+    }//GEN-LAST:event_buttonAction1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> Monto;
     private org.edisoncor.gui.button.ButtonAction buttonAction1;
-    private javax.swing.JComboBox<String> jComboBox1;
     private org.edisoncor.gui.label.LabelMetric labelMetric1;
     private org.edisoncor.gui.label.LabelMetric labelMetric2;
     private org.edisoncor.gui.panel.Panel panel1;
-    private org.edisoncor.gui.textField.TextFieldRectIcon textFieldRectIcon1;
+    private org.edisoncor.gui.textField.TextFieldRectIcon txtOtro;
     // End of variables declaration//GEN-END:variables
 }

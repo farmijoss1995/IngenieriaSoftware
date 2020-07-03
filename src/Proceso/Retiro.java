@@ -5,17 +5,25 @@
  */
 package Proceso;
 
+import java.awt.Rectangle;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+
 /**
  *
  * @author Usuario
  */
 public class Retiro extends javax.swing.JInternalFrame {
-
+double monto;
+double nuevomonto;
     /**
      * Creates new form Retiro
      */
     public Retiro() {
         initComponents();
+        setTitle("Deposito");
+        setBounds(new Rectangle(270, 12, 372, 275));
     }
 
     /**
@@ -32,9 +40,9 @@ public class Retiro extends javax.swing.JInternalFrame {
         labelMetric3 = new org.edisoncor.gui.label.LabelMetric();
         panel2 = new org.edisoncor.gui.panel.Panel();
         labelMetric1 = new org.edisoncor.gui.label.LabelMetric();
-        passwordField1 = new org.edisoncor.gui.passwordField.PasswordField();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jTextField1 = new javax.swing.JTextField();
+        txtClaveretiro = new org.edisoncor.gui.passwordField.PasswordField();
+        comMonto = new javax.swing.JComboBox<>();
+        txtOtro = new javax.swing.JTextField();
         buttonAction1 = new org.edisoncor.gui.button.ButtonAction();
 
         setClosable(true);
@@ -60,7 +68,7 @@ public class Retiro extends javax.swing.JInternalFrame {
                 .addGap(30, 30, 30)
                 .addComponent(labelMetric1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
-                .addComponent(passwordField1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtClaveretiro, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(40, 40, 40))
         );
         panel2Layout.setVerticalGroup(
@@ -69,18 +77,23 @@ public class Retiro extends javax.swing.JInternalFrame {
                 .addContainerGap(29, Short.MAX_VALUE)
                 .addGroup(panel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelMetric1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(passwordField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtClaveretiro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(31, 31, 31))
         );
 
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100", "200", "300", "400", "500", "1000", "2000", "3000", "10000", "20000" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        comMonto.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "100", "200", "300", "400", "500", "1000", "2000", "3000", "10000", "20000", "Otro" }));
+        comMonto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                comMontoActionPerformed(evt);
             }
         });
 
         buttonAction1.setText("Retirar");
+        buttonAction1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAction1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -95,8 +108,8 @@ public class Retiro extends javax.swing.JInternalFrame {
                             .addComponent(labelMetric3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jComboBox1, 0, 127, Short.MAX_VALUE)
-                            .addComponent(jTextField1)))
+                            .addComponent(comMonto, 0, 127, Short.MAX_VALUE)
+                            .addComponent(txtOtro)))
                     .addComponent(panel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(44, 44, 44))
             .addGroup(panel1Layout.createSequentialGroup()
@@ -112,11 +125,11 @@ public class Retiro extends javax.swing.JInternalFrame {
                 .addGap(29, 29, 29)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelMetric2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(comMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(22, 22, 22)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(labelMetric3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtOtro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(27, 27, 27)
                 .addComponent(buttonAction1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(25, Short.MAX_VALUE))
@@ -135,21 +148,50 @@ public class Retiro extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+      
+    private void comMontoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comMontoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_comMontoActionPerformed
+
+    private void buttonAction1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAction1ActionPerformed
+        // TODO add your handling code here:
+        
+         try{
+        if(txtClaveretiro.getText().isEmpty()){throw new Exception("El campo clave\nesta vacio");}
+             
+        if(comMonto.getSelectedItem().toString().equals("Otro")&&txtOtro.getText().isEmpty()){throw new Exception("El campo para ingresar\nel monto esta vacio");}
+            
+        if(txtClaveretiro.getText().length()!=4){throw new Exception("El campo para la clave\nsolo puede ir numeros");}
+             
+        if(txtClaveretiro.getText().equals(Ingresar.clave)==false){throw new Exception("La clave\nno es correcta");}
+             
+        if(comMonto.getSelectedItem().toString().equals("Otro")){monto= Double.parseDouble(txtOtro.getText());
+        
+             }else{monto= Double.parseDouble(comMonto.getSelectedItem().toString());
+        }
+        
+               nuevomonto= Deposito.getSaldoActual(Ingresar.cuenta);
+               nuevomonto-=monto;
+               
+           String update = "update usuario set Saldo = "+nuevomonto+" where `Numero de cuenta`="+Ingresar.cuenta;
+           Conexion.sentencia = Conexion.conexion.createStatement();
+           Conexion.sentencia.executeUpdate(update);
+           Util.mensaje(this, "Exito al Retirar", "Exito", "src/Imagenes/descarga.jpg");
+                    }catch(Exception ex){
+                        Util.mensaje(this, ex.getMessage(), "Error", "src/Imagenes/descarga.jpg");
+                    }
+    }//GEN-LAST:event_buttonAction1ActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.edisoncor.gui.button.ButtonAction buttonAction1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JComboBox<String> comMonto;
     private org.edisoncor.gui.label.LabelMetric labelMetric1;
     private org.edisoncor.gui.label.LabelMetric labelMetric2;
     private org.edisoncor.gui.label.LabelMetric labelMetric3;
     private org.edisoncor.gui.panel.Panel panel1;
     private org.edisoncor.gui.panel.Panel panel2;
-    private org.edisoncor.gui.passwordField.PasswordField passwordField1;
+    private org.edisoncor.gui.passwordField.PasswordField txtClaveretiro;
+    private javax.swing.JTextField txtOtro;
     // End of variables declaration//GEN-END:variables
 }

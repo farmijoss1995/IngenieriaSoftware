@@ -54,9 +54,9 @@
                   </Group>
                   <EmptySpace max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                      <Component id="textField1" max="32767" attributes="0"/>
+                      <Component id="txtMonto" max="32767" attributes="0"/>
                       <Component id="jComboBox1" pref="123" max="32767" attributes="0"/>
-                      <Component id="passwordField1" max="32767" attributes="0"/>
+                      <Component id="txtClaveingre" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
               </Group>
@@ -75,12 +75,12 @@
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="labelMetric1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="passwordField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="txtClaveingre" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="labelMetric2" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <Component id="textField1" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtMonto" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="37" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
@@ -110,9 +110,9 @@
             <Property name="text" type="java.lang.String" value="Cuenta"/>
           </Properties>
         </Component>
-        <Component class="org.edisoncor.gui.passwordField.PasswordField" name="passwordField1">
+        <Component class="org.edisoncor.gui.passwordField.PasswordField" name="txtClaveingre">
         </Component>
-        <Component class="java.awt.TextField" name="textField1">
+        <Component class="java.awt.TextField" name="txtMonto">
         </Component>
         <Component class="javax.swing.JComboBox" name="jComboBox1">
           <Properties>

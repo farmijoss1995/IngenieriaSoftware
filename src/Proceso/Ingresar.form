@@ -54,10 +54,8 @@
                   <EmptySpace pref="80" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="jButton1" pref="97" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="passwordField1" alignment="0" max="32767" attributes="0"/>
-                          <Component id="textField1" pref="97" max="32767" attributes="0"/>
-                      </Group>
+                      <Component id="txtClaveingre" alignment="0" max="32767" attributes="0"/>
+                      <Component id="txtCuentaingre" alignment="1" pref="97" max="32767" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
               </Group>
@@ -68,13 +66,13 @@
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Component id="textField1" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtCuentaingre" min="-2" max="-2" attributes="0"/>
                       <Component id="labelMetric1" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelMetric2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="passwordField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtClaveingre" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace pref="25" max="32767" attributes="0"/>
                   <Component id="jButton1" min="-2" max="-2" attributes="0"/>
@@ -94,20 +92,26 @@
             <Property name="text" type="java.lang.String" value="Clave"/>
           </Properties>
         </Component>
-        <Component class="java.awt.TextField" name="textField1">
+        <Component class="java.awt.TextField" name="txtCuentaingre">
+          <Properties>
+            <Property name="name" type="java.lang.String" value="txtCuentaingre" noResource="true"/>
+          </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textField1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCuentaingreActionPerformed"/>
           </Events>
         </Component>
-        <Component class="org.edisoncor.gui.passwordField.PasswordField" name="passwordField1">
+        <Component class="org.edisoncor.gui.passwordField.PasswordField" name="txtClaveingre">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="passwordField1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtClaveingreActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JButton" name="jButton1">
           <Properties>
             <Property name="text" type="java.lang.String" value="Ingresar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jButton1ActionPerformed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

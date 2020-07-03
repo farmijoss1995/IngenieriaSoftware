@@ -55,8 +55,8 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="buttonAction1" min="-2" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                          <Component id="jComboBox1" max="32767" attributes="0"/>
-                          <Component id="textFieldRectIcon1" pref="110" max="32767" attributes="0"/>
+                          <Component id="Monto" max="32767" attributes="0"/>
+                          <Component id="txtOtro" pref="110" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
@@ -69,12 +69,12 @@
                   <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelMetric1" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="jComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="Monto" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="21" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
                       <Component id="labelMetric2" alignment="3" min="-2" max="-2" attributes="0"/>
-                      <Component id="textFieldRectIcon1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="txtOtro" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                   <Component id="buttonAction1" min="-2" max="-2" attributes="0"/>
@@ -94,20 +94,23 @@
             <Property name="text" type="java.lang.String" value="Otro monto"/>
           </Properties>
         </Component>
-        <Component class="org.edisoncor.gui.textField.TextFieldRectIcon" name="textFieldRectIcon1">
+        <Component class="org.edisoncor.gui.textField.TextFieldRectIcon" name="txtOtro">
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="textFieldRectIcon1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtOtroActionPerformed"/>
           </Events>
         </Component>
         <Component class="org.edisoncor.gui.button.ButtonAction" name="buttonAction1">
           <Properties>
             <Property name="text" type="java.lang.String" value="EJECUTAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="buttonAction1ActionPerformed"/>
+          </Events>
         </Component>
-        <Component class="javax.swing.JComboBox" name="jComboBox1">
+        <Component class="javax.swing.JComboBox" name="Monto">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="10">
+              <StringArray count="11">
                 <StringItem index="0" value="100"/>
                 <StringItem index="1" value="200"/>
                 <StringItem index="2" value="300"/>
@@ -118,11 +121,12 @@
                 <StringItem index="7" value="3000"/>
                 <StringItem index="8" value="10000"/>
                 <StringItem index="9" value="20000"/>
+                <StringItem index="10" value="Otro"/>
               </StringArray>
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jComboBox1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="MontoActionPerformed"/>
           </Events>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
