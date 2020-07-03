@@ -5,17 +5,23 @@
  */
 package Proceso;
 
+import java.awt.Rectangle;
+import java.sql.Statement;
+
 /**
  *
  * @author Usuario
  */
 public class Transferencia extends javax.swing.JInternalFrame {
 
+    double montoActual;
+
     /**
      * Creates new form Transferencia
      */
     public Transferencia() {
         initComponents();
+        setBounds(new Rectangle(400, 200, 354, 265));
     }
 
     /**
@@ -33,7 +39,7 @@ public class Transferencia extends javax.swing.JInternalFrame {
         labelMetric3 = new org.edisoncor.gui.label.LabelMetric();
         txtClaveingre = new org.edisoncor.gui.passwordField.PasswordField();
         txtMonto = new java.awt.TextField();
-        jComboBox1 = new javax.swing.JComboBox<>();
+        comCuentas = new javax.swing.JComboBox<>();
         buttonAction1 = new org.edisoncor.gui.button.ButtonAction();
 
         setClosable(true);
@@ -50,6 +56,11 @@ public class Transferencia extends javax.swing.JInternalFrame {
         labelMetric3.setText("Cuenta");
 
         buttonAction1.setText("Transferir");
+        buttonAction1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                buttonAction1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
@@ -64,7 +75,7 @@ public class Transferencia extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(txtMonto, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jComboBox1, 0, 123, Short.MAX_VALUE)
+                    .addComponent(comCuentas, 0, 123, Short.MAX_VALUE)
                     .addComponent(txtClaveingre, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(47, 47, 47))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
@@ -86,7 +97,7 @@ public class Transferencia extends javax.swing.JInternalFrame {
                     .addComponent(txtMonto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(37, 37, 37)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(comCuentas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(labelMetric3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(buttonAction1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -107,10 +118,55 @@ public class Transferencia extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void buttonAction1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAction1ActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (txtClaveingre.getText().isEmpty()) {
+                throw new Exception("El campo clave\nesta vacio");
+            }
+
+            if (txtMonto.getText().isEmpty()) {
+                throw new Exception("El campo monto\nesta vacio");
+            }
+
+            if (txtClaveingre.getText().equals(Ingresar.clave) == false) {
+                throw new Exception("Clave Incorrecta");
+            }
+
+            if (Util.tieneLetras(txtMonto.getText())) {
+                throw new Exception("La monto es un numero");
+            }
+
+            if (Double.parseDouble(txtMonto.getText()) > montoActual) {
+                throw new Exception("No existen fondos suficientes\npara realizarn la transferencia");
+            }
+            String cuentaExterna = comCuentas.getSelectedItem().toString();
+            double saldoIngresado = Double.parseDouble(txtMonto.getText());
+            double nuevoSaldoPropio = montoActual - saldoIngresado;
+            double nuevoSaldoExterno = Deposito.getSaldoActual(cuentaExterna)+ saldoIngresado;
+            
+            String update = "update usuario set Saldo="+nuevoSaldoPropio+"where `Numero de cuenta =`"+Ingresar.cuenta;
+            String update2 = "update usuario set Saldo="+nuevoSaldoExterno+"where `Numero de cuenta =`"+cuentaExterna;
+            
+            Statement sta = Conexion.conexion.createStatement();
+            Conexion.sentencia.executeUpdate(update);
+            
+            Statement sta2 = Conexion.conexion.createStatement();
+            Conexion.sentencia.executeUpdate(update2);
+             Util.mensaje(this, "Exito al Retirar", "Exito", "src/Imagenes/descarga.jpg");
+    }
+    catch(Exception ex
+
+    
+        ){
+                        Util.mensaje(this, ex.getMessage(), "Error", "src/Imagenes/descarga.jpg");
+    }
+    }//GEN-LAST:event_buttonAction1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private org.edisoncor.gui.button.ButtonAction buttonAction1;
-    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> comCuentas;
     private org.edisoncor.gui.label.LabelMetric labelMetric1;
     private org.edisoncor.gui.label.LabelMetric labelMetric2;
     private org.edisoncor.gui.label.LabelMetric labelMetric3;
