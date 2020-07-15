@@ -6,6 +6,7 @@
 package Proceso;
 
 import java.awt.Rectangle;
+import java.sql.ResultSet;
 import java.sql.Statement;
 
 /**
@@ -22,6 +23,7 @@ public class Transferencia extends javax.swing.JInternalFrame {
     public Transferencia() {
         initComponents();
         setBounds(new Rectangle(400, 200, 354, 265));
+        llenarCombo();
     }
 
     /**
@@ -117,48 +119,47 @@ public class Transferencia extends javax.swing.JInternalFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+        public final void llenarCombo(){
+                try{
+                    String consulta = "Select `Numero de cuenta` from usuario";
+                    Statement sta = Conexion.conexion.createStatement();
+                    ResultSet rs = sta.executeQuery(consulta);
+                    while(rs.next()){
+                        comCuentas.addItem(rs.getString(1));
+                        
+                    }
+                    
+                }catch(Exception ex){
+                        Util.mensaje(this, ex.getMessage(), "Error", "src/Imagenes/descarga.jpg");
+                }
+            }
     private void buttonAction1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_buttonAction1ActionPerformed
         // TODO add your handling code here:
         try {
-            if (txtClaveingre.getText().isEmpty()) {
-                throw new Exception("El campo clave\nesta vacio");
-            }
+            montoActual=Deposito.getSaldoActual(Ingresar.cuenta);
+            if (txtClaveingre.getText().isEmpty()) {throw new Exception("El campo clave\nesta vacio");  }
 
-            if (txtMonto.getText().isEmpty()) {
-                throw new Exception("El campo monto\nesta vacio");
-            }
+            if (txtMonto.getText().isEmpty()) {throw new Exception("El campo monto\nesta vacio");            }
 
-            if (txtClaveingre.getText().equals(Ingresar.clave) == false) {
-                throw new Exception("Clave Incorrecta");
-            }
+            if (txtClaveingre.getText().equals(Ingresar.clave) == false) {throw new Exception("Clave Incorrecta");            }
 
-            if (Util.tieneLetras(txtMonto.getText())) {
-                throw new Exception("La monto es un numero");
-            }
+            if (Util.tieneLetras(txtMonto.getText())) {throw new Exception("La monto es un numero");            }
 
-            if (Double.parseDouble(txtMonto.getText()) > montoActual) {
-                throw new Exception("No existen fondos suficientes\npara realizarn la transferencia");
+            if (Double.parseDouble(txtMonto.getText()) >montoActual) {throw new Exception("No existen fondos suficientes\npara realizarn la transferencia");
             }
             String cuentaExterna = comCuentas.getSelectedItem().toString();
             double saldoIngresado = Double.parseDouble(txtMonto.getText());
             double nuevoSaldoPropio = montoActual - saldoIngresado;
             double nuevoSaldoExterno = Deposito.getSaldoActual(cuentaExterna)+ saldoIngresado;
             
-            String update = "update usuario set Saldo="+nuevoSaldoPropio+"where `Numero de cuenta =`"+Ingresar.cuenta;
-            String update2 = "update usuario set Saldo="+nuevoSaldoExterno+"where `Numero de cuenta =`"+cuentaExterna;
+            String update = "update usuario set Saldo =" +nuevoSaldoPropio+ "where `Numero de cuenta`="+Ingresar.cuenta;
+            String update2 = "update usuario set Saldo=" +nuevoSaldoExterno+"where `Numero de cuenta`="+cuentaExterna;
             
-            Statement sta = Conexion.conexion.createStatement();
+            Conexion.sentencia= Conexion.conexion.createStatement();
             Conexion.sentencia.executeUpdate(update);
-            
-            Statement sta2 = Conexion.conexion.createStatement();
             Conexion.sentencia.executeUpdate(update2);
-             Util.mensaje(this, "Exito al Retirar", "Exito", "src/Imagenes/descarga.jpg");
-    }
-    catch(Exception ex
-
-    
-        ){
+            Util.mensaje(this, "Exito al Transferir", "Exito", "src/Imagenes/descarga.jpg");
+    }catch(Exception ex){
                         Util.mensaje(this, ex.getMessage(), "Error", "src/Imagenes/descarga.jpg");
     }
     }//GEN-LAST:event_buttonAction1ActionPerformed

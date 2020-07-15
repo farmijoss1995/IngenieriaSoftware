@@ -147,10 +147,20 @@ public class Inicio extends javax.swing.JFrame {
         jMenu2.add(jSeparator2);
 
         jMenuItem7.setText("Eliminar Cuenta");
+        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem7ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem7);
         jMenu2.add(jSeparator3);
 
         jMenuItem8.setText("Cerrar Sesion");
+        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenuItem8ActionPerformed(evt);
+            }
+        });
         jMenu2.add(jMenuItem8);
 
         jMenuBar1.add(jMenu2);
@@ -300,6 +310,36 @@ public class Inicio extends javax.swing.JFrame {
                 "Retiro",JOptionPane.INFORMATION_MESSAGE,new ImageIcon("src/Imagenes/Info_icon_002.svg.png"));
     
     }//GEN-LAST:event_jMenuItem10ActionPerformed
+
+    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+        // TODO add your handling code here:
+        
+        Ingresar.cuenta="";
+        Ingresar.clave="";
+    }//GEN-LAST:event_jMenuItem8ActionPerformed
+
+    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+        // TODO add your handling code here:
+        String cuentaIngresada = JOptionPane.showInputDialog("INGRESE CLAVE");
+        if(!cuentaIngresada.equals(Ingresar.clave)){
+            Util.mensaje(this, "Clave Incorrecta", "Error", "src/Imagenes/Info_icon_002.svg.png");
+            return;
+        }
+        int resp = JOptionPane.showConfirmDialog(this, "Deseas Eliminar Esta Cuenta?");
+        if(resp !=0){
+            return;
+        }
+        try{
+            String delete = "delete from usuario where `Numero de cuenta` = "+Ingresar.cuenta;
+            Conexion.sentencia = Conexion.conexion.createStatement();
+            Conexion.sentencia.execute(delete);
+            Util.mensaje(this, "Se Elimino Correctamente la Cuenta", "Error", "src/Imagenes/Info_icon_002.svg.png");
+            
+        }catch (Exception ex){
+            Util.mensaje(this, ex.getMessage(), "Error", "src/Imagenes/Info_icon_002.svg.png");
+            
+        }
+    }//GEN-LAST:event_jMenuItem7ActionPerformed
 
     /**
      * @param args the command line arguments

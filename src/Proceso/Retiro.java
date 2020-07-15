@@ -164,16 +164,17 @@ double nuevomonto;
         if(txtClaveretiro.getText().length()!=4){throw new Exception("El campo para la clave\nsolo puede ir numeros");}
              
         if(txtClaveretiro.getText().equals(Ingresar.clave)==false){throw new Exception("La clave\nno es correcta");}
-             
+                   
         if(comMonto.getSelectedItem().toString().equals("Otro")){monto= Double.parseDouble(txtOtro.getText());
         
              }else{monto= Double.parseDouble(comMonto.getSelectedItem().toString());
         }
+        if(monto>Deposito.getSaldoActual(Ingresar.cuenta)){throw new Exception("No existen fondos en la cuenta");}
         
                nuevomonto= Deposito.getSaldoActual(Ingresar.cuenta);
                nuevomonto-=monto;
                
-           String update = "update usuario set Saldo = "+nuevomonto+" where `Numero de cuenta`="+Ingresar.cuenta;
+           String update = "update usuario set Saldo = "+nuevomonto+" where `Numero de cuenta` = " +Ingresar.cuenta;
            Conexion.sentencia = Conexion.conexion.createStatement();
            Conexion.sentencia.executeUpdate(update);
            Util.mensaje(this, "Exito al Retirar", "Exito", "src/Imagenes/descarga.jpg");
