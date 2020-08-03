@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 package Proceso;
+
+import java.awt.Font;
 import java.awt.Rectangle;
 import java.sql.ResultSet;
+import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 /**
@@ -127,8 +130,23 @@ public class Ingresar extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtClaveingreActionPerformed
 
+    public String getCedula(String nCuenta){
+        String cdl = "";
+        try{
+            String consulta= "select DNI fro usuario where `Numero de cuenta`= "+nCuenta;
+            Statement sta = Conexion.conexion.createStatement();
+            ResultSet rs= sta.executeQuery(consulta);
+            if(rs.next()){
+                cdl = rs.getInt(1)+"";
+            }
+        }catch(Exception ex){
+            Util.mensaje(this, ex.getMessage(), "Error", "src/Imagenes/descarga.jpg");
+        }
+        return cdl;
+    }
+    
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-
+            Conexion con = Conexion();
         // TODO add your handling code here:
         
         try{
@@ -139,17 +157,19 @@ public class Ingresar extends javax.swing.JInternalFrame {
              
              cuenta=txtCuentaingre.getText();
              clave=txtClaveingre.getText();
+             String s="";
              String consulta = "Select Clave from  usuario where `Numero de cuenta`="+cuenta;
-             Conexion.sentencia =Conexion.conexion.createStatement();
+             Conexion.sentencia = Conexion.conexion.createStatement();
              ResultSet rs = Conexion.sentencia.executeQuery(consulta);
              while(rs.next()){
                  if(clave.equals(rs.getString("Clave"))==false){
                      throw new Exception("CLAVE INCORRECTA!!!");
                  }
              }
-             
-             
+             Inicio.habilitar = true;
+             Inicio.titulo="Cuenta - "+getNombre(cuenta);
              Util.mensaje(this, "Bienvenido..", "Exito", "src/Imagenes/descarga.jpg");
+             dispose();
                 } catch (Exception ex) {
             Util.mensaje(this, ex.getMessage(), "Error", "src/Imagenes/descarga.jpg");
         }      
@@ -164,4 +184,8 @@ public class Ingresar extends javax.swing.JInternalFrame {
     private org.edisoncor.gui.passwordField.PasswordField txtClaveingre;
     private java.awt.TextField txtCuentaingre;
     // End of variables declaration//GEN-END:variables
+
+    private Conexion Conexion() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }

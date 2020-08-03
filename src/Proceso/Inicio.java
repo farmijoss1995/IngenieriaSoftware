@@ -5,7 +5,11 @@
  */
 package Proceso;
 
+import java.awt.Font;
 import java.awt.Rectangle;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 
@@ -14,6 +18,10 @@ import javax.swing.JOptionPane;
  * @author Usuario
  */
 public class Inicio extends javax.swing.JFrame {
+            public static boolean habilitar =false;
+            public static String titulo;
+            public static String resumen;
+            
             
     
     /**
@@ -21,11 +29,11 @@ public class Inicio extends javax.swing.JFrame {
      */
     public Inicio() {
         initComponents();
-       Conexion con = new Conexion();
-       con.Conectar();
         setBounds(new Rectangle(900, 600));
         setLocationRelativeTo(null);
         setTitle("Sistema de Cuenta de Ahorros");
+        txtresumen.setFont(new Font("Maiandra GD", Font.BOLD, 13));
+        habilitarCampos(habilitar);
     }
 
     /**
@@ -39,6 +47,8 @@ public class Inicio extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         panel1 = new org.edisoncor.gui.panel.Panel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        txtresumen = new javax.swing.JTextPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem2 = new javax.swing.JMenuItem();
@@ -46,13 +56,13 @@ public class Inicio extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JPopupMenu.Separator();
         jMenuItem3 = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        jMenuItem4 = new javax.swing.JMenuItem();
-        jMenuItem5 = new javax.swing.JMenuItem();
-        jMenuItem6 = new javax.swing.JMenuItem();
+        meDepositar = new javax.swing.JMenuItem();
+        meRetirar = new javax.swing.JMenuItem();
+        meTransferir = new javax.swing.JMenuItem();
         jSeparator2 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem7 = new javax.swing.JMenuItem();
+        meEliminar = new javax.swing.JMenuItem();
         jSeparator3 = new javax.swing.JPopupMenu.Separator();
-        jMenuItem8 = new javax.swing.JMenuItem();
+        meLogout = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
         jMenuItem9 = new javax.swing.JMenuItem();
         jMenuItem10 = new javax.swing.JMenuItem();
@@ -65,16 +75,33 @@ public class Inicio extends javax.swing.JFrame {
         jPanel1.setBackground(new java.awt.Color(0, 51, 204));
 
         panel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/4-min.jpg"))); // NOI18N
+        panel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                panel1MouseEntered(evt);
+            }
+        });
+
+        txtresumen.setFont(new java.awt.Font("Maiandra GD", 0, 12)); // NOI18N
+        txtresumen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                txtresumenMouseEntered(evt);
+            }
+        });
+        jScrollPane1.setViewportView(txtresumen);
 
         javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
         panel1.setLayout(panel1Layout);
         panel1Layout.setHorizontalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 402, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel1Layout.createSequentialGroup()
+                .addGap(0, 254, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         panel1Layout.setVerticalGroup(
             panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 303, Short.MAX_VALUE)
+            .addGroup(panel1Layout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 203, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -120,48 +147,57 @@ public class Inicio extends javax.swing.JFrame {
 
         jMenu2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/herramientas-seo.jpg"))); // NOI18N
         jMenu2.setText("Operaciones");
-
-        jMenuItem4.setText("Depositar");
-        jMenuItem4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem4ActionPerformed(evt);
+        jMenu2.addMenuListener(new javax.swing.event.MenuListener() {
+            public void menuCanceled(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuDeselected(javax.swing.event.MenuEvent evt) {
+            }
+            public void menuSelected(javax.swing.event.MenuEvent evt) {
+                jMenu2MenuSelected(evt);
             }
         });
-        jMenu2.add(jMenuItem4);
 
-        jMenuItem5.setText("Retirar");
-        jMenuItem5.addActionListener(new java.awt.event.ActionListener() {
+        meDepositar.setText("Depositar");
+        meDepositar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem5ActionPerformed(evt);
+                meDepositarActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem5);
+        jMenu2.add(meDepositar);
 
-        jMenuItem6.setText("Transferir");
-        jMenuItem6.addActionListener(new java.awt.event.ActionListener() {
+        meRetirar.setText("Retirar");
+        meRetirar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem6ActionPerformed(evt);
+                meRetirarActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem6);
+        jMenu2.add(meRetirar);
+
+        meTransferir.setText("Transferir");
+        meTransferir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                meTransferirActionPerformed(evt);
+            }
+        });
+        jMenu2.add(meTransferir);
         jMenu2.add(jSeparator2);
 
-        jMenuItem7.setText("Eliminar Cuenta");
-        jMenuItem7.addActionListener(new java.awt.event.ActionListener() {
+        meEliminar.setText("Eliminar Cuenta");
+        meEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem7ActionPerformed(evt);
+                meEliminarActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem7);
+        jMenu2.add(meEliminar);
         jMenu2.add(jSeparator3);
 
-        jMenuItem8.setText("Cerrar Sesion");
-        jMenuItem8.addActionListener(new java.awt.event.ActionListener() {
+        meLogout.setText("Cerrar Sesion");
+        meLogout.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem8ActionPerformed(evt);
+                meLogoutActionPerformed(evt);
             }
         });
-        jMenu2.add(jMenuItem8);
+        jMenu2.add(meLogout);
 
         jMenuBar1.add(jMenu2);
 
@@ -220,7 +256,25 @@ public class Inicio extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+public void habilitarCampos(boolean aux){
+    if(aux){
+        meDepositar.setEnabled(true);
+        meRetirar.setEnabled(true);
+        meTransferir.setEnabled(true);
+        meEliminar.setEnabled(true);
+        meLogout.setEnabled(true);
+              
+    }else{
+        meDepositar.setEnabled(false);
+        meRetirar.setEnabled(false);
+        meTransferir.setEnabled(false);
+        meEliminar.setEnabled(false);
+        meLogout.setEnabled(false);
+    }
+}
+    
+    
+    
     private void jMenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem2ActionPerformed
              // TODO add your handling code here:
              Nuevo nu=new Nuevo();
@@ -229,12 +283,12 @@ public class Inicio extends javax.swing.JFrame {
              
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
-    private void jMenuItem6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem6ActionPerformed
+    private void meTransferirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meTransferirActionPerformed
         // TODO add your handling code here:
          Transferencia tra=new Transferencia();
              panel1.add(tra);
              tra.show();
-    }//GEN-LAST:event_jMenuItem6ActionPerformed
+    }//GEN-LAST:event_meTransferirActionPerformed
 
     private void jMenuItem11ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem11ActionPerformed
         // TODO add your handling code here:
@@ -269,19 +323,19 @@ public class Inicio extends javax.swing.JFrame {
              in.show();
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
-    private void jMenuItem4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem4ActionPerformed
+    private void meDepositarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meDepositarActionPerformed
         // TODO add your handling code here:
          Deposito de=new Deposito();
              panel1.add(de);
              de.show();
-    }//GEN-LAST:event_jMenuItem4ActionPerformed
+    }//GEN-LAST:event_meDepositarActionPerformed
 
-    private void jMenuItem5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem5ActionPerformed
+    private void meRetirarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meRetirarActionPerformed
         // TODO add your handling code here:
          Retiro re=new Retiro();
              panel1.add(re);
              re.show();
-    }//GEN-LAST:event_jMenuItem5ActionPerformed
+    }//GEN-LAST:event_meRetirarActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
         // TODO add your handling code here:
@@ -311,21 +365,27 @@ public class Inicio extends javax.swing.JFrame {
     
     }//GEN-LAST:event_jMenuItem10ActionPerformed
 
-    private void jMenuItem8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem8ActionPerformed
+    private void meLogoutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meLogoutActionPerformed
         // TODO add your handling code here:
         
         Ingresar.cuenta="";
         Ingresar.clave="";
-    }//GEN-LAST:event_jMenuItem8ActionPerformed
+        txtresumen.setText("");
+        this.setTitle("Sistema de Cuenta de Ahorros");
+        habilitar = false;
+        habilitarCampos(habilitar);
+        
+    }//GEN-LAST:event_meLogoutActionPerformed
 
-    private void jMenuItem7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem7ActionPerformed
+    private void meEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_meEliminarActionPerformed
         // TODO add your handling code here:
-        String cuentaIngresada = JOptionPane.showInputDialog("INGRESE CLAVE");
+        String cuentaIngresada = JOptionPane.showInputDialog(this, "Ingrese su Clave", "Ingresar", JOptionPane.WARNING_MESSAGE);
         if(!cuentaIngresada.equals(Ingresar.clave)){
             Util.mensaje(this, "Clave Incorrecta", "Error", "src/Imagenes/Info_icon_002.svg.png");
             return;
         }
-        int resp = JOptionPane.showConfirmDialog(this, "Deseas Eliminar Esta Cuenta?");
+        int resp = JOptionPane.showConfirmDialog(this, "¿Deseas Eliminar Esta Cuenta?", "Advertencia", JOptionPane.INFORMATION_MESSAGE,
+                                                 JOptionPane.YES_NO_OPTION, new ImageIcon("src/Imagenes/descarga.jpg"));
         if(resp !=0){
             return;
         }
@@ -334,12 +394,48 @@ public class Inicio extends javax.swing.JFrame {
             Conexion.sentencia = Conexion.conexion.createStatement();
             Conexion.sentencia.execute(delete);
             Util.mensaje(this, "Se Elimino Correctamente la Cuenta", "Error", "src/Imagenes/Info_icon_002.svg.png");
+            txtresumen.setText("");  
+            this.setTitle("Sistema de Cuenta de Ahorros");
+            Ingresar.cuenta="";
+            Ingresar.clave="";
+            habilitar = false;
+            habilitarCampos(habilitar);
             
         }catch (Exception ex){
             Util.mensaje(this, ex.getMessage(), "Error", "src/Imagenes/Info_icon_002.svg.png");
             
         }
-    }//GEN-LAST:event_jMenuItem7ActionPerformed
+    }//GEN-LAST:event_meEliminarActionPerformed
+
+    private void jMenu2MenuSelected(javax.swing.event.MenuEvent evt) {//GEN-FIRST:event_jMenu2MenuSelected
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jMenu2MenuSelected
+
+    private void txtresumenMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtresumenMouseEntered
+        // TODO add your handling code here:
+        habilitarCampos(habilitar);
+    }//GEN-LAST:event_txtresumenMouseEntered
+
+    private void panel1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_panel1MouseEntered
+        // TODO add your handling code here:
+        Ingresar in= new Ingresar();
+        if(habilitar==false){
+            return;
+        }
+        this.setTitle(titulo);
+                try {
+                    resumen="Resumen------------"+
+                            "\nCuenta: "+Ingresar.cuenta+
+                            "\nNombre: "+in.getNombre(Ingresar.cuenta)+
+                            "\nCedula: "+in.getCedula(Ingresar.cuenta)+
+                            "\nSaldo: "+Deposito.getSaldoActual(Ingresar.cuenta);
+                } catch (SQLException ex) {
+                    Logger.getLogger(Inicio.class.getName()).log(Level.SEVERE, null, ex);
+                }
+        txtresumen.setText(resumen);
+                
+    }//GEN-LAST:event_panel1MouseEntered
 
     /**
      * @param args the command line arguments
@@ -387,17 +483,19 @@ public class Inicio extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem12;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JMenuItem jMenuItem3;
-    private javax.swing.JMenuItem jMenuItem4;
-    private javax.swing.JMenuItem jMenuItem5;
-    private javax.swing.JMenuItem jMenuItem6;
-    private javax.swing.JMenuItem jMenuItem7;
-    private javax.swing.JMenuItem jMenuItem8;
     private javax.swing.JMenuItem jMenuItem9;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPopupMenu.Separator jSeparator1;
     private javax.swing.JPopupMenu.Separator jSeparator2;
     private javax.swing.JPopupMenu.Separator jSeparator3;
     private javax.swing.JPopupMenu.Separator jSeparator4;
+    private javax.swing.JMenuItem meDepositar;
+    private javax.swing.JMenuItem meEliminar;
+    private javax.swing.JMenuItem meLogout;
+    private javax.swing.JMenuItem meRetirar;
+    private javax.swing.JMenuItem meTransferir;
     private org.edisoncor.gui.panel.Panel panel1;
+    private javax.swing.JTextPane txtresumen;
     // End of variables declaration//GEN-END:variables
 }
